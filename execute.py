@@ -4,6 +4,7 @@
 import os
 import os.path as osp
 import sys
+from config import cfg, cfg_from_file, save_cfg
 
 
 class Execute(object):
@@ -26,5 +27,23 @@ class Execute(object):
 
     def getTotalImageNum(self):
         return len(self.image_names)
+
+    def setSrcDir(self, dir):
+        cfg.SRC_DIR = dir
+
+    def getSrcDir(self):
+        return cfg.SRC_DIR
+
+    def setDstDir(self, dir):
+        cfg.DST_DIR = dir
+
+    def getDstDir(self):
+        return cfg.DST_DIR
+
+    def start(self):
+        pass
+
+    def restore(self):
+        pass
 
 

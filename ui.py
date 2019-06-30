@@ -1,9 +1,10 @@
 #!/home/shu/Applications/Envs/py3/bin/python3
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import (QWidget, QApplication, QDesktopWidget, QLabel, QPushButton,
-                             QProgressBar, QRadioButton, QButtonGroup, QFrame, QHBoxLayout, QVBoxLayout)
+from PyQt5.QtWidgets import (QWidget, QDesktopWidget, QLabel, QPushButton, QProgressBar,
+                             QRadioButton, QButtonGroup, QFrame, QHBoxLayout, QVBoxLayout)
 from PyQt5.QtGui import QIcon, QColor
+from PyQt5.QtCore import Qt
 from ImgLabel import ImgLabel
 from config import cfg
 
@@ -220,9 +221,16 @@ class MainUI(QWidget):
         horizon_method_group.addButton(self.auto_horizon_btn)
         horizon_method_group.setExclusive(True)
 
-        self.ref_lines_btn = QPushButton('Ref. Lines', self)
+        self.ref_lines_btn = QPushButton('Ref.  Lines', self)
+        self.ref_lines_btn.setFixedSize(250, 26)
         self.ref_lines_btn.setCheckable(True)
         # self.ref_lines_btn.clicked.connecct(self.refLinesBtnRespond)
+
+        ref_num_lbl = QLabel(self)
+        ref_num_lbl.setStyleSheet("QLabel{border:1px solid rgb(180, 180, 180); background-color: white}")
+        ref_num_lbl.setFixedSize(60, 26)
+        ref_num_lbl.setAlignment(Qt.AlignCenter)
+        ref_num_lbl.setText(str(cfg.REF_LINE_NUM))
 
         hs_hbox = QHBoxLayout()
         hs_hbox.addWidget(h_lbl)
@@ -238,10 +246,17 @@ class MainUI(QWidget):
         hm_hbox.addWidget(self.auto_horizon_btn)
         hm_hbox.addStretch(10)
 
+        hr_hbox = QHBoxLayout()
+        # hm_hbox.addStretch(1)
+        hr_hbox.addWidget(self.ref_lines_btn)
+        hm_hbox.addStretch(1)
+        hr_hbox.addWidget(ref_num_lbl)
+        hm_hbox.addStretch(10)
+
         self.horizon_vbox = QVBoxLayout()
         self.horizon_vbox.addLayout(hs_hbox)
         self.horizon_vbox.addLayout(hm_hbox)
-        self.horizon_vbox.addWidget(self.ref_lines_btn)
+        self.horizon_vbox.addLayout(hr_hbox)
 
     def initObstacleModule(self):
         o_lbl = QLabel('Obstacle:', self)
