@@ -16,11 +16,17 @@ class Mark(MainUI):
     def __init__(self):
         super().__init__()
 
-
     def srcBtnRespond(self):
         home_dir = osp.expanduser('~')
         dir_name = QFileDialog.getExistingDirectory(self, 'Select Directory', home_dir)
         self.src_show_box.setText(dir_name)
+        # self.bg_app.setSrcDir(dir_name)
+
+    def dstBtnRespond(self):
+        home_dir = osp.expanduser('~')
+        dir_name = QFileDialog.getExistingDirectory(self, 'Select Directory', home_dir)
+        self.dst_show_box.setText(dir_name)
+        # self.bg_app.setDstDir(dir_name)
 
 
 if __name__ == '__main__':

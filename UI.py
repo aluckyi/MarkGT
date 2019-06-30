@@ -96,7 +96,7 @@ class MainUI(QWidget):
         self.dst_show_box.setFixedSize(1000, 22)
         self.dst_btn = QPushButton('...', self)
         self.dst_btn.setFixedSize(30, 22)
-        # self.dst_btn.clicked.connect(self.dstBtnRespond)
+        self.dst_btn.clicked.connect(self.dstBtnRespond)
         dst_hbox = QHBoxLayout()
         dst_hbox.addStretch(1)
         dst_hbox.addWidget(dst_lbl)
