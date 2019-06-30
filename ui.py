@@ -1,13 +1,9 @@
 #!/home/shu/Applications/Envs/py3/bin/python3
 # -*- coding: utf-8 -*-
 
-
 from PyQt5.QtWidgets import (QWidget, QApplication, QDesktopWidget, QLabel, QPushButton,
                              QProgressBar, QRadioButton, QButtonGroup, QFrame, QHBoxLayout, QVBoxLayout)
 from PyQt5.QtGui import QIcon, QColor
-import os
-import os.path as osp
-import sys
 from ImgLabel import ImgLabel
 from config import cfg
 
