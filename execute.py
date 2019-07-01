@@ -40,6 +40,13 @@ class Execute(object):
     def getDstDir(self):
         return cfg.DST_DIR
 
+    def saveConfig(self):
+        cfg.IMAGE_NAME = self.cur_image_name
+        save_cfg()
+
+    def saveData(self, data):
+        pass
+
     def start(self):
         pass
 
