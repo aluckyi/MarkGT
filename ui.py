@@ -147,7 +147,6 @@ class MainUI(QWidget):
         self.y_box = QLabel(self)
         self.y_box.setFixedSize(60, 22)
         self.y_box.setStyleSheet("QLabel{border:1px solid rgb(180, 180, 180); background-color: white;}")
-        # self.img_lbl.setXYBox(self.x_box, self.y_box)
 
         cur_hbox = QHBoxLayout()
         cur_hbox.addWidget(cur_img_lbl)

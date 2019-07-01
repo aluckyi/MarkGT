@@ -13,8 +13,8 @@ cfg = __C
 
 # __C.SRC_DIR = ''
 # __C.DST_DIR = ''
-__C.SRC_DIR = '/home/shu/Pictures/src'
-__C.DST_DIR = '/home/shu/Pictures/dst'
+__C.SRC_DIR = '/home/liu/Pictures/src'
+__C.DST_DIR = '/home/liu/Pictures/dst'
 __C.IMAGE_NAME = ''
 
 __C.IMAGE_WIDTH = 800
@@ -22,7 +22,7 @@ __C.IMAGE_HEIGHT = 800
 __C.REF_LINE_NUM = 17
 __C.SMALL_OBS_COLOR = (255, 0, 0)
 __C.LARGE_OBS_COLOR = (255, 0, 255)
-__C.LINE_WIDTH = 5
+__C.LINE_WIDTH = 3
 
 
 def _merge_a_into_b(a, b):

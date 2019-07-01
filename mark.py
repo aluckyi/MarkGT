@@ -17,6 +17,7 @@ class Mark(MainUI):
         super().__init__()
 
         self.exe = Execute()
+        self.img_lbl.initXYBoxObjs(self.x_box, self.y_box)
 
         self.start_flag = False
         self.mode = 'Horizon'
@@ -92,8 +93,9 @@ class Mark(MainUI):
             QMessageBox.warning(self, 'warning', 'No jpg or png images in SRC Path!!!')
             return
 
-        # self.img_lbl.reset()
+        self.img_lbl.reset()
         self.display(isFinished=False)
+        self.img_lbl.setEnableImageFlag(True)
         self.start_flag = True
 
     def restoreBtnRespond(self):
