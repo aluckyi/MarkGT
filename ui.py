@@ -109,14 +109,15 @@ class MainUI(QWidget):
 
     def initImageModule(self):
         self.img_lbl = ImgLabel(self)
-        self.img_lbl.setFixedSize(cfg.IMAGE_WIDTH, cfg.IMAGE_HEIGHT)
+        self.img_lbl.setFixedSize(800, 800)
+        self.img_lbl.setAlignment(Qt.AlignTop | Qt.AlignLeft)
         self.img_lbl.setStyleSheet("QLabel{background-color: gray;}")
 
     def initStatusModule(self):
         cur_img_lbl = QLabel('Image:', self)
         cur_img_lbl.setFixedSize(45, 22)
         self.cur_img_box = QLabel(self)
-        self.cur_img_box.setFixedSize(230, 22)
+        self.cur_img_box.setFixedSize(232, 22)
         self.cur_img_box.setStyleSheet("QLabel{border:1px solid rgb(180, 180, 180); background-color: white;}")
 
         prog_lbl = QLabel('Progress:', self)
@@ -132,7 +133,7 @@ class MainUI(QWidget):
 
         pbar_lbl = QLabel('Finished:', self)
         self.pbar = QProgressBar(self)
-        self.pbar.setFixedSize(220, 22)
+        self.pbar.setFixedSize(210, 22)
 
         x_lbl = QLabel('X :', self)
         x_lbl.setFixedSize(16, 22)
@@ -179,12 +180,11 @@ class MainUI(QWidget):
     def initModeModule(self):
         m_lbl = QLabel('Mode:', self)
         self.h_mode = QRadioButton('Horizon', self)
-        # self.h_mode.clicked.connect(self.modeRespond)
+        self.h_mode.clicked.connect(self.modeRespond)
         self.o_mode = QRadioButton('Obstacle', self)
-        # self.o_mode.clicked.connect(self.modeRespond)
+        self.o_mode.clicked.connect(self.modeRespond)
 
         self.h_mode.setChecked(True)
-        # self.img_lbl.setMode('Horizon')
 
         m_btn_group = QButtonGroup(self)
         m_btn_group.addButton(self.h_mode)
@@ -209,12 +209,11 @@ class MainUI(QWidget):
 
         method_lbl = QLabel('Method:', self)
         self.manual_horizon_btn = QRadioButton('Manual', self)
-        # self.manual_horizon_btn.clicked.connect(self.manualHorizonRespond)
+        self.manual_horizon_btn.clicked.connect(self.horizonMethodRespond)
         self.auto_horizon_btn = QRadioButton('Auto', self)
-        # self.auto_horizon_btn.clicked.connect(self.autoHorizonRespond)
+        self.auto_horizon_btn.clicked.connect(self.horizonMethodRespond)
 
         self.manual_horizon_btn.setChecked(True)
-        # self.img_lbl.setHorizonMethod('manual')
 
         horizon_method_group = QButtonGroup(self)
         horizon_method_group.addButton(self.manual_horizon_btn)
@@ -224,7 +223,7 @@ class MainUI(QWidget):
         self.ref_lines_btn = QPushButton('Ref.  Lines', self)
         self.ref_lines_btn.setFixedSize(240, 26)
         self.ref_lines_btn.setCheckable(True)
-        # self.ref_lines_btn.clicked.connecct(self.refLinesBtnRespond)
+        self.ref_lines_btn.clicked[bool].connect(self.referLinesBtnRespond)
 
         ref_num_lbl = QLabel(self)
         ref_num_lbl.setStyleSheet("QLabel{border:1px solid rgb(180, 180, 180); background-color: white}")
@@ -268,11 +267,11 @@ class MainUI(QWidget):
 
         self.small_obs_btn = QPushButton('Small Obstacle', self)
         self.small_obs_btn.setCheckable(True)
-        # self.small_obs_btn.clicked.connect(self.smallObsBtnRespond)
+        self.small_obs_btn.clicked.connect(self.obsClsBtnRespond)
 
         self.large_obs_btn = QPushButton('Large Obstacle', self)
         self.large_obs_btn.setCheckable(True)
-        # self.large_obs_btn.clicked.connect(self.largeObsBtnRespond)
+        self.large_obs_btn.clicked.connect(self.obsClsBtnRespond)
 
         self.small_obs_btn.setChecked(True)
         self.large_obs_btn.setChecked(False)
@@ -283,10 +282,10 @@ class MainUI(QWidget):
         cls_btn_group.addButton(self.large_obs_btn)
         cls_btn_group.setExclusive(True)
 
-        self.obs_cls_col = QColor(*cfg.SMALL_OBS_COLOR)
+        obs_cls_col = QColor(*cfg.SMALL_OBS_COLOR)
         self.obs_cls_square = QFrame(self)
         self.obs_cls_square.setFixedSize(55, 55)
-        self.obs_cls_square.setStyleSheet("QWidget { background-color: %s }" % self.obs_cls_col.name())
+        self.obs_cls_square.setStyleSheet("QWidget { background-color: %s }" % obs_cls_col.name())
 
         os_hbox = QHBoxLayout()
         os_hbox.addWidget(o_lbl)
@@ -310,14 +309,14 @@ class MainUI(QWidget):
         sq_lbl = QLabel('Sequential Operation:', self)
 
         self.sq_btn_start = QPushButton('Start', self)
-        # self.sq_btn_start.clicked.connect(self.startBtnRespond)
+        self.sq_btn_start.clicked.connect(self.startBtnRespond)
         self.sq_btn_restore = QPushButton('Restore', self)
-        # self.sq_btn_restore.clicked.connect(self.restoreBtnRespond)
+        self.sq_btn_restore.clicked.connect(self.restoreBtnRespond)
 
         self.sq_btn_undo = QPushButton('Undo', self)
-        # self.sq_btn_undo.clicked.connect(self.undoBtnRespond)
+        self.sq_btn_undo.clicked.connect(self.undoBtnRespond)
         self.sq_btn_next = QPushButton('Next', self)
-        # self.sq_btn_next.clicked.connect(self.nextBtnRespond)
+        self.sq_btn_next.clicked.connect(self.nextBtnRespond)
 
         sq_hbox1 = QHBoxLayout()
         sq_hbox1.addWidget(self.sq_btn_start)

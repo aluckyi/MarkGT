@@ -48,7 +48,24 @@ class Execute(object):
         pass
 
     def start(self):
-        pass
+        if not osp.exists(cfg.SRC_DIR):
+            return -1
+        if not osp.exists(cfg.DST_DIR):
+            return -2
+
+        image_names = [x for x in os.listdir(cfg.SRC_DIR) if x.endswith('.png')]
+        image_names += [x for x in os.listdir(cfg.SRC_DIR) if x.endswith('.jpg')]
+        image_names = sorted(image_names)
+        if len(image_names) == 0:
+            return -3
+
+        self.image_names = image_names
+        self.saveConfig()
+
+        self.cur_image_no = 0
+        self.cur_image_name = self.image_names[self.cur_image_no]
+
+        return 0
 
     def restore(self):
         pass
