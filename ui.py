@@ -112,6 +112,7 @@ class MainUI(QWidget):
         self.img_lbl.setFixedSize(800, 800)
         self.img_lbl.setAlignment(Qt.AlignTop | Qt.AlignLeft)
         self.img_lbl.setStyleSheet("QLabel{background-color: gray;}")
+        self.img_lbl.grabKeyboard()
 
     def initStatusModule(self):
         cur_img_lbl = QLabel('Image:', self)
@@ -281,6 +282,17 @@ class MainUI(QWidget):
         cls_btn_group.addButton(self.large_obs_btn)
         cls_btn_group.setExclusive(True)
 
+        self.small_obs_num_lbl = QLabel(self)
+        self.small_obs_num_lbl.setStyleSheet("QLabel{border:1px solid rgb(180, 180, 180); background-color: white}")
+        self.small_obs_num_lbl.setFixedSize(30, 26)
+        self.small_obs_num_lbl.setAlignment(Qt.AlignCenter)
+        self.small_obs_num_lbl.setText(str(0))
+        self.large_obs_num_lbl = QLabel(self)
+        self.large_obs_num_lbl.setStyleSheet("QLabel{border:1px solid rgb(180, 180, 180); background-color: white}")
+        self.large_obs_num_lbl.setFixedSize(30, 26)
+        self.large_obs_num_lbl.setAlignment(Qt.AlignCenter)
+        self.large_obs_num_lbl.setText(str(0))
+
         obs_cls_col = QColor(*cfg.SMALL_OBS_COLOR)
         self.obs_cls_square = QFrame(self)
         self.obs_cls_square.setFixedSize(55, 55)
@@ -292,9 +304,15 @@ class MainUI(QWidget):
         os_hbox.addWidget(self.o_square)
         os_hbox.addStretch(15)
 
+        so_hbox = QHBoxLayout()
+        so_hbox.addWidget(self.small_obs_btn)
+        so_hbox.addWidget(self.small_obs_num_lbl)
+        lo_hbox = QHBoxLayout()
+        lo_hbox.addWidget(self.large_obs_btn)
+        lo_hbox.addWidget(self.large_obs_num_lbl)
         cls_vbox = QVBoxLayout()
-        cls_vbox.addWidget(self.small_obs_btn)
-        cls_vbox.addWidget(self.large_obs_btn)
+        cls_vbox.addLayout(so_hbox)
+        cls_vbox.addLayout(lo_hbox)
 
         obs_hbox = QHBoxLayout()
         obs_hbox.addLayout(cls_vbox)

@@ -18,6 +18,7 @@ class Mark(MainUI):
 
         self.exe = Execute()
         self.img_lbl.initXYBoxObjs(self.x_box, self.y_box)
+        self.img_lbl.initSLObsNumObjs(self.small_obs_num_lbl, self.large_obs_num_lbl)
 
         self.start_flag = False
         self.mode = 'Horizon'
@@ -42,10 +43,12 @@ class Mark(MainUI):
         # print(source.text())
         if source.text() == 'Horizon':
             self.mode = 'Horizon'
+            self.img_lbl.setMode(self.mode)
             self.h_square.setStyleSheet("QWidget { background-color: rgb(0, 255, 0); }")
             self.o_square.setStyleSheet("QWidget { background-color: rgb(180, 180, 180); }")
         else:
             self.mode = 'Obstacle'
+            self.img_lbl.setMode(self.mode)
             self.h_square.setStyleSheet("QWidget { background-color: rgb(180, 180, 180); }")
             self.o_square.setStyleSheet("QWidget { background-color: rgb(0, 255, 0); }")
 
@@ -58,17 +61,18 @@ class Mark(MainUI):
             self.horizon_method = 'Auto'
 
     def referLinesBtnRespond(self, value):
-        self.refer_lines_flag = value
-        # print(self.refer_lines_flag)
+        self.img_lbl.setReferLinesFlag(value)
 
     def obsClsBtnRespond(self):
         source = self.sender()
         if source.text() == 'Small Obstacle':
             self.obs_cls = 'Small Obstacle'
+            self.img_lbl.setObsCls(self.obs_cls)
             obs_cls_col = QColor(*cfg.SMALL_OBS_COLOR)
             self.obs_cls_square.setStyleSheet("QWidget { background-color: %s }" % obs_cls_col.name())
         else:
             self.obs_cls = 'Large Obstacle'
+            self.img_lbl.setObsCls(self.obs_cls)
             obs_cls_col = QColor(*cfg.LARGE_OBS_COLOR)
             self.obs_cls_square.setStyleSheet("QWidget { background-color: %s }" % obs_cls_col.name())
         # print(self.obs_cls)

@@ -13,8 +13,8 @@ cfg = __C
 
 # __C.SRC_DIR = ''
 # __C.DST_DIR = ''
-__C.SRC_DIR = '/home/liu/Pictures/src'
-__C.DST_DIR = '/home/liu/Pictures/dst'
+__C.SRC_DIR = '/home/shu/Pictures/src'
+__C.DST_DIR = '/home/shu/Pictures/dst'
 __C.IMAGE_NAME = ''
 
 __C.IMAGE_WIDTH = 800
