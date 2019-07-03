@@ -160,7 +160,7 @@ class ImgLabel(QLabel):
         # display key points of horizon
         if len(self.horizon_data) > 0:
             for idx, point in enumerate(self.horizon_data):
-                if idx == self.horizon_modified_idx:
+                if idx == self.horizon_modified_idx:  # modify marked point of horizon
                     continue
                 self.pen.setWidth(2)
                 self.pen.setColor(QColor(0, 0, 0))
