@@ -18,6 +18,8 @@ class Mark(MainUI):
 
         self.exe = Execute()
         self.img_lbl.initXYBoxObjs(self.x_box, self.y_box)
+        self.img_lbl.initReferLineNumObj(self.ref_num_lbl)
+        self.img_lbl.initHorizonModifyObj(self.horizon_modify_btn)
         self.img_lbl.initSLObsNumObjs(self.small_obs_num_lbl, self.large_obs_num_lbl)
 
         self.start_flag = False
@@ -52,16 +54,38 @@ class Mark(MainUI):
             self.h_square.setStyleSheet("QWidget { background-color: rgb(180, 180, 180); }")
             self.o_square.setStyleSheet("QWidget { background-color: rgb(0, 255, 0); }")
 
+            self.img_lbl.setHorizonModifyFlag(False)
+            self.horizon_modify_btn.setChecked(False)
+
     def horizonMethodRespond(self):
         source = self.sender()
-        # print(source.text())
         if source.text() == 'Manual':
             self.horizon_method = 'Manual'
         else:
             self.horizon_method = 'Auto'
 
     def referLinesBtnRespond(self, value):
-        self.img_lbl.setReferLinesFlag(value)
+        self.img_lbl.setReferLines(value)
+
+    def horizonModifyBtnRespond(self, value):
+        if not self.start_flag:
+            QMessageBox.warning(self, 'warning', 'Please press [Start] or [Restore]!!!')
+            self.horizon_modify_btn.setChecked(False)
+            return
+
+        if value:
+            if self.mode != 'Horizon':
+                QMessageBox.warning(self, 'warning', 'The [Mode] must be "Horizon" !!!')
+                self.horizon_modify_btn.setChecked(False)
+                return
+
+            ret = self.img_lbl.setHorizonModifyFlag(value)
+            if ret < 0:
+                QMessageBox.warning(self, 'warning', 'The horizon has not been marked!!!')
+                self.horizon_modify_btn.setChecked(False)
+                return
+        else:
+            self.img_lbl.setHorizonModifyFlag(value)
 
     def obsClsBtnRespond(self):
         source = self.sender()
@@ -97,19 +121,86 @@ class Mark(MainUI):
             QMessageBox.warning(self, 'warning', 'No jpg or png images in SRC Path!!!')
             return
 
-        self.img_lbl.reset()
         self.display(isFinished=False)
         self.img_lbl.setEnableImageFlag(True)
+        self.img_lbl.reset()
+
         self.start_flag = True
 
     def restoreBtnRespond(self):
-        pass
+        reply = QMessageBox.question(self, 'warning', "Are you sure to restore?",
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.No:
+            return
+
+        ret = self.exe.restore()
+        if ret < 0:
+            QMessageBox.warning(self, 'warning', 'Some problems exist, cannot restore!!!')
+            return
+
+        self.display(isFinished=False)
+        self.img_lbl.setEnableImageFlag(True)
+        self.img_lbl.reset()
+
+        self.start_flag = True
 
     def undoBtnRespond(self):
-        pass
+        if not self.start_flag:
+            QMessageBox.warning(self, 'warning', 'Please press [Start] or [Restore]!!!')
+            return
+        ret = self.img_lbl.undo()
+        if ret == -1:
+            QMessageBox.warning(self, 'warning', 'All marks are removed!!!')
 
     def nextBtnRespond(self):
-        pass
+        if not self.start_flag:
+            QMessageBox.warning(self, 'warning', 'Please press [Start] or [Restore]!!!')
+            return
+
+        horizon_data, obs_data = self.img_lbl.getData()
+        ret = self.exe.saveData(horizon_data, obs_data)
+        if ret == -1:
+            QMessageBox.warning(self, 'warning', 'Marking Horizon has not completed!!!')
+            return
+        if ret == -2:
+            self.display(isFinished=True)
+            reply = QMessageBox.question(self, 'warning',
+                                         'All marking has completed!!!, Are you sure to finish?',
+                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+            if reply == QMessageBox.No:
+                self.img_lbl.reset()
+                return
+            self.reset()
+            return
+
+        self.img_lbl.reset()
+        self.display(isFinished=False)
+
+    def reset(self):
+        self.start_flag = False
+
+        self.src_show_box.clear()
+        self.dst_show_box.clear()
+
+        self.img_lbl.clear()
+        self.img_lbl.setEnableImageFlag(False)
+        self.img_lbl.reset()
+
+        self.cur_img_box.clear()
+        self.no_box.clear()
+        self.total_box.clear()
+        self.pbar.reset()
+        self.x_box.clear()
+        self.y_box.clear()
+
+        self.ref_num_lbl.clear()
+        self.small_obs_num_lbl.clear()
+        self.large_obs_num_lbl.clear()
+
+        self.exe.setSrcDir('')
+        self.exe.setDstDir('')
+        self.exe.reset()
+        self.exe.saveConfig()
 
     def display(self, isFinished):
         cur_image_name = self.exe.getCurrentImageName()
@@ -129,6 +220,10 @@ class Mark(MainUI):
         else:
             pb_val = int((float(cur_image_no) / total_image_num) * 100)
         self.pbar.setValue(pb_val)
+
+        self.ref_num_lbl.setText(str(0))
+        self.small_obs_num_lbl.setText(str(0))
+        self.large_obs_num_lbl.setText(str(0))
 
         self.img_lbl.loadFromDisk(osp.join(cfg.SRC_DIR, cur_image_name))
 

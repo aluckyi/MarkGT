@@ -221,15 +221,31 @@ class MainUI(QWidget):
         horizon_method_group.setExclusive(True)
 
         self.ref_lines_btn = QPushButton('Ref.  Lines', self)
-        self.ref_lines_btn.setFixedSize(240, 26)
+        # self.ref_lines_btn.setFixedSize(240, 26)
         self.ref_lines_btn.setCheckable(True)
         self.ref_lines_btn.clicked[bool].connect(self.referLinesBtnRespond)
 
-        ref_num_lbl = QLabel(self)
-        ref_num_lbl.setStyleSheet("QLabel{border:1px solid rgb(180, 180, 180); background-color: white}")
-        ref_num_lbl.setFixedSize(40, 26)
-        ref_num_lbl.setAlignment(Qt.AlignCenter)
-        ref_num_lbl.setText(str(cfg.REF_LINE_NUM))
+        self.ref_num_lbl = QLabel(self)
+        self.ref_num_lbl.setStyleSheet("QLabel{border:1px solid rgb(180, 180, 180); background-color: white}")
+        self.ref_num_lbl.setFixedSize(30, 26)
+        self.ref_num_lbl.setAlignment(Qt.AlignCenter)
+        self.ref_num_lbl.setText(str(0))
+
+        separate = QLabel('/', self)
+        separate.setFixedSize(18, 22)
+        separate.setAlignment(Qt.AlignHCenter)
+
+        ref_total_lbl = QLabel(self)
+        ref_total_lbl.setStyleSheet("QLabel{border:1px solid rgb(180, 180, 180); background-color: white}")
+        ref_total_lbl.setFixedSize(30, 26)
+        ref_total_lbl.setAlignment(Qt.AlignCenter)
+        ref_total_lbl.setText(str(cfg.REF_LINE_NUM))
+
+        self.horizon_modify_btn = QPushButton('Modify', self)
+        self.horizon_modify_btn.setFixedSize(187, 26)
+        self.horizon_modify_btn.setCheckable(True)
+        self.horizon_modify_btn.clicked[bool].connect(self.horizonModifyBtnRespond)
+
 
         hs_hbox = QHBoxLayout()
         hs_hbox.addWidget(h_lbl)
@@ -246,16 +262,16 @@ class MainUI(QWidget):
         hm_hbox.addStretch(10)
 
         hr_hbox = QHBoxLayout()
-        # hm_hbox.addStretch(1)
         hr_hbox.addWidget(self.ref_lines_btn)
-        hm_hbox.addStretch(1)
-        hr_hbox.addWidget(ref_num_lbl)
-        hm_hbox.addStretch(10)
+        hr_hbox.addWidget(self.ref_num_lbl)
+        hr_hbox.addWidget(separate)
+        hr_hbox.addWidget(ref_total_lbl)
 
         self.horizon_vbox = QVBoxLayout()
         self.horizon_vbox.addLayout(hs_hbox)
         self.horizon_vbox.addLayout(hm_hbox)
         self.horizon_vbox.addLayout(hr_hbox)
+        self.horizon_vbox.addWidget(self.horizon_modify_btn)
 
     def initObstacleModule(self):
         o_lbl = QLabel('Obstacle:', self)

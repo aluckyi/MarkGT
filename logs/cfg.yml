@@ -1,6 +1,6 @@
-DST_DIR: /home/shu/Pictures/dst
+DST_DIR: /home/liu/Pictures/dst
 IMAGE_HEIGHT: 800
-IMAGE_NAME: ''
+IMAGE_NAME: 0.png
 IMAGE_WIDTH: 800
 LARGE_OBS_COLOR:
 - 255
@@ -12,4 +12,4 @@ SMALL_OBS_COLOR:
 - 255
 - 0
 - 0
-SRC_DIR: /home/shu/Pictures/src
+SRC_DIR: /home/liu/Pictures/src
