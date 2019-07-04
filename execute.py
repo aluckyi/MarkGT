@@ -62,7 +62,7 @@ class Execute(object):
                     data['obs']['large'].append(obs_rect)
 
         name = self.cur_image_name.split('.')[0]
-        save_path = osp.join(cfg.DST_DIR, name + '.xml')
+        save_path = osp.join(cfg.DST_DIR, name + '.yml')
         with open(save_path, 'w') as f:
             yaml.dump(data, f)
             # data1 = yaml.load(f, Loader=yaml.FullLoader)
